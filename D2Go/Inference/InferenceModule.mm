@@ -29,9 +29,9 @@ const int threshold = 0.5;
     return self;
 }
 
-- (NSArray<NSNumber*>*)detectImage:(void*)imageBuffer {
+- (NSArray<NSNumber*>*)detectImage:(void*)imageBuffer width:(int)inputWidth height:(int)inputHeight {
     try {
-        at::Tensor tensor = torch::from_blob(imageBuffer, { 3, input_width, input_height }, at::kFloat);
+        at::Tensor tensor = torch::from_blob(imageBuffer, { 3, inputHeight, inputWidth }, at::kFloat);
         c10::InferenceMode guard;
 
         std::vector<torch::Tensor> v;

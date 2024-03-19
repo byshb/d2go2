@@ -32,25 +32,71 @@ class PrePostProcessor : NSObject {
             }
         }
     }
-
-    static func outputsToPredictions(outputs: [NSNumber], imgScaleX: Double, imgScaleY: Double, ivScaleX: Double, ivScaleY: Double, startX: Double, startY: Double) -> [Prediction] {
+    
+    static func outputsToPredictions(image: UIImage, outputs: [NSNumber]) -> (UIImage?, [Prediction]) {
+        var rects: [CGRect] = []
         var predictions = [Prediction]()
-        for i in 0..<outputs.count / 6 {
-            if Float(truncating: outputs[i*outputColumn+4]) > threshold {
-                let left = imgScaleX * Double(truncating: outputs[i*outputColumn])
-                let top = imgScaleY * Double(truncating: outputs[i*outputColumn+1])
-                let right = imgScaleX * Double(truncating: outputs[i*outputColumn+2])
-                let bottom = imgScaleY * Double(truncating: outputs[i*outputColumn+3])
-                
-                let rect = CGRect(x: startX+ivScaleX*left, y: startY+top*ivScaleY, width: ivScaleX*(right-left), height: ivScaleY*(bottom-top))
-                
-                let prediction = Prediction(classIndex: Int(truncating: outputs[i*outputColumn+5]) - 1, score: Float(truncating: outputs[i*outputColumn+4]), rect: rect)
+        for i in 0 ..< outputs.count / 6 {
+            if Float(truncating: outputs[i * outputColumn + 4]) > 0.5 {
+                let left = Double(truncating: outputs[i * outputColumn])
+                let top = Double(truncating: outputs[i * outputColumn + 1])
+                let right = Double(truncating: outputs[i * outputColumn + 2])
+                let bottom = Double(truncating: outputs[i * outputColumn + 3])
+
+                let x = left
+                let y = top
+                let width = right - left
+                let height = bottom - top
+                let rect = CGRect(x: x, y: y, width: width, height: height)
+                rects.append(rect)
+
+                let prediction = Prediction(classIndex: 1, score: Float(truncating: outputs[i*outputColumn+4]), rect: rect)
                 predictions.append(prediction)
             }
         }
-
-        return predictions
+        return (drawRectanglesOnImage(image: image, rectangles: rects), predictions)
     }
+
+    static func drawRectanglesOnImage(image: UIImage, rectangles: [CGRect]) -> UIImage? {
+        // 开始一个图形上下文
+        UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
+        // 在图形上下文中绘制原始图像
+        image.draw(at: CGPoint.zero)
+        // 获取当前的图形上下文
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        // 渲染矩形
+        context.setFillColor(UIColor.red.withAlphaComponent(0.2).cgColor)
+        for rect in rectangles {
+            context.addRect(rect)
+        }
+        context.fillPath()
+        // 从图形上下文中获取新的UIImage
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        // 结束图形上下文
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+
+//    static func outputsToPredictions(outputs: [NSNumber], imgScaleX: Double, imgScaleY: Double, ivScaleX: Double, ivScaleY: Double, startX: Double, startY: Double) -> [Prediction] {
+//        var predictions = [Prediction]()
+//        for i in 0..<outputs.count / 6 {
+//            if Float(truncating: outputs[i*outputColumn+4]) > threshold {
+//                let left = imgScaleX * Double(truncating: outputs[i*outputColumn])
+//                let top = imgScaleY * Double(truncating: outputs[i*outputColumn+1])
+//                let right = imgScaleX * Double(truncating: outputs[i*outputColumn+2])
+//                let bottom = imgScaleY * Double(truncating: outputs[i*outputColumn+3])
+//                
+//                let rect = CGRect(x: startX+ivScaleX*left, y: startY+top*ivScaleY, width: ivScaleX*(right-left), height: ivScaleY*(bottom-top))
+//                
+//                let prediction = Prediction(classIndex: Int(truncating: outputs[i*outputColumn+5]) - 1, score: Float(truncating: outputs[i*outputColumn+4]), rect: rect)
+//                predictions.append(prediction)
+//            }
+//        }
+//
+//        return predictions
+//    }
     
     static func showDetection(imageView: UIImageView, nmsPredictions:[Prediction], classes: [String]) {
         for prediction in nmsPredictions {

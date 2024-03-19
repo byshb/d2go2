@@ -18,11 +18,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SRR-fU-drQ">
-                                <rect key="frame" x="0.0" y="192" width="414" height="414"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="414" id="91b-dW-d6L"/>
-                                </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x5T-Eu-U1r">
                                 <rect key="frame" x="184" y="631" width="46" height="30"/>
@@ -59,15 +56,16 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="x5T-Eu-U1r" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="539" id="04M-rh-J2H"/>
                             <constraint firstItem="SRR-fU-drQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="3TH-Oj-UfI"/>
                             <constraint firstItem="Ngn-Yr-ype" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="984-1Q-nry"/>
                             <constraint firstItem="suK-Xh-DuX" firstAttribute="top" secondItem="rnC-JU-BNk" secondAttribute="bottom" constant="20" id="BM5-Ud-9Pf"/>
                             <constraint firstItem="SRR-fU-drQ" firstAttribute="centerX" secondItem="x5T-Eu-U1r" secondAttribute="centerX" id="CMU-q7-8Qh"/>
+                            <constraint firstAttribute="bottom" secondItem="SRR-fU-drQ" secondAttribute="bottom" id="Eal-Sh-wnx"/>
                             <constraint firstItem="Ngn-Yr-ype" firstAttribute="top" secondItem="x5T-Eu-U1r" secondAttribute="bottom" constant="20" id="ScM-9t-yR6"/>
                             <constraint firstItem="SRR-fU-drQ" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Yqn-0Q-sWL"/>
-                            <constraint firstItem="SRR-fU-drQ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="k1r-XA-qbB"/>
                             <constraint firstItem="rnC-JU-BNk" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kcZ-9E-CSE"/>
-                            <constraint firstItem="x5T-Eu-U1r" firstAttribute="top" secondItem="SRR-fU-drQ" secondAttribute="bottom" constant="25" id="oip-GM-Bry"/>
+                            <constraint firstItem="SRR-fU-drQ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="qGa-gF-tsk"/>
                             <constraint firstItem="rnC-JU-BNk" firstAttribute="top" secondItem="Ngn-Yr-ype" secondAttribute="bottom" constant="18" id="t4e-7j-Ztd"/>
                             <constraint firstItem="suK-Xh-DuX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yUI-K5-aqq"/>
                         </constraints>
